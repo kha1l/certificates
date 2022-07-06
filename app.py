@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from operation.orders import get_order
 from operation.changes import get_changes
 from writter.autorization import auto
+import time
 
 
 def start():
@@ -12,6 +13,7 @@ def start():
         get_order(i[0], i[2], i[3], i[4], dt)
         df = get_changes(i[0])
         auto(i[1], df, dt)
+        time.sleep(15)
         print(i[1])
 
 

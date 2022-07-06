@@ -43,7 +43,10 @@ def get_changes(rest_id):
         df_orders_rec = pd.DataFrame()
         counter = 0
         for i in df_delivery['№ заказа']:
-            m = i.split(', ')
+            try:
+                m = i.split(', ')
+            except AttributeError:
+                m = []
             for j in m:
                 df_orders_rec = pd.concat([df_orders_rec, df_delivery[df_delivery['№ заказа'] == i]], ignore_index=True)
                 df_orders_rec.at[counter, 'orders'] = j
@@ -83,7 +86,10 @@ def get_changes(rest_id):
         df_total['Начало'] = df_total['Начало'].apply(lambda x: str(x).split(' ')[-1])
         counter = 0
         for i in df_total['№ заказа']:
-            m = i.split(', ')
+            try:
+                m = i.split(', ')
+            except AttributeError:
+                m = []
             adrs = ''
             for j in m:
                 df_adrs = df_order.loc[df_order['№ заказа'] == j]

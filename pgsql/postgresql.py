@@ -1,5 +1,7 @@
 import psycopg2
 from configuration.config import Config
+from psycopg2 import errors
+from psycopg2.errorcodes import INVALID_DATETIME_FORMAT
 
 
 class Database:
@@ -31,7 +33,11 @@ class Database:
         return data
 
     def get_users(self, group: int):
-        sql = 'SELECT rest_id, name_rest, long_id, login, password FROM settingsrest WHERE group_index=%s ' \
-              'ORDER BY rest_id'
+        sql = '''
+            SELECT rest_id, name_rest, long_id, login, password 
+            FROM settingsrest 
+            WHERE group_index=%s and rest_id=1361
+            ORDER BY rest_id
+        '''
         parameters = (group,)
         return self.execute(sql, parameters=parameters, fetchall=True)
